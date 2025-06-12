@@ -973,6 +973,15 @@ body {
     }
 }
 
+/* Scroll margin للأقسام - لتجنب تداخل الهيدر */
+section {
+    scroll-margin-top: 80px;
+}
+
+#home, #video-demo, #features, #pricing, #contact {
+    scroll-margin-top: 80px;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
@@ -1099,9 +1108,14 @@ body {
     }
 }
 
-/* Smooth scroll */
+/* Smooth scroll - محسن للWebView */
 html {
     scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+body {
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Back to Top Button */

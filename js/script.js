@@ -82,17 +82,34 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Smooth scroll to section
+// Smooth scroll to section - محسن للWebView
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
     if (element) {
-        const headerHeight = header.offsetHeight;
+        const headerHeight = header ? header.offsetHeight : 80;
         const elementPosition = element.offsetTop - headerHeight;
         
-        window.scrollTo({
-            top: elementPosition,
-            behavior: 'smooth'
-        });
+        // طريقة بديلة للتمرير إذا فشلت الطريقة الأولى
+        try {
+            window.scrollTo({
+                top: elementPosition,
+                behavior: 'smooth'
+            });
+        } catch (e) {
+            // إذا فشل smooth scroll، استخدم الطريقة التقليدية
+            window.scrollTo(0, elementPosition);
+        }
+        
+        // طريقة إضافية للWebView
+        if (element.scrollIntoView) {
+            setTimeout(() => {
+                element.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start',
+                    inline: 'nearest'
+                });
+            }, 100);
+        }
     }
 }
 
