@@ -1,0 +1,30 @@
+{
+  "name": "aljoker-sport-iptv-website",
+  "version": "1.0.0",
+  "description": "موقع عصري وجذاب لبيع اشتراكات خدمات البث المباشر والرياضي - الجوكر سبورت IPTV",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "build": "echo 'Build completed - Static website ready for deployment'"
+  },
+  "keywords": [
+    "iptv",
+    "streaming",
+    "arabic",
+    "website",
+    "subscription",
+    "broadcasting"
+  ],  "author": "الجوكر سبورت IPTV Team",
+  "license": "MIT",
+  "homepage": "https://github.com/username/aljoker-sport-iptv",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/username/aljoker-sport-iptv.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/aljoker-sport-iptv/issues"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
