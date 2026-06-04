@@ -1013,7 +1013,7 @@ section {
     text-align: center;
     margin-top: 15px;
     font-size: 1.05rem;
-    color: var(--text-muted);
+    color: #ffffff;
 }
 
 .payment-methods i {
