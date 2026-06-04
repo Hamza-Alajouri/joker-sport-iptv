@@ -14,41 +14,41 @@ function orderViaWhatsApp(planType) {
     if (planType === 'popular') {
         planType = 'semiannual';
     }
-    
+
     const plan = pricingPlans[planType];
     if (!plan) return;
-    
-    let message = `🌟 *طلب اشتراك الجوكر سبورت IPTV* 🌟\n\n`;
+
+    let message = `🌟 *طلب اشتراك يلا كورة IPTV* 🌟\n\n`;
     message += `📋 *الباقة المختارة:* ${plan.name}\n`;
     message += `💰 *السعر:* $${plan.price}`;
-    
+
     if (plan.duration) {
         message += ` / ${plan.duration === 1 ? 'شهر' : plan.duration === 3 ? '3 أشهر' : plan.duration === 6 ? '6 أشهر' : plan.duration === 12 ? 'سنة' : 'سنتان'}\n`;
     } else {
         message += `\n`;
     }
-    
+
     if (plan.savings) {
         message += `💸 *توفير:* $${plan.savings}\n`;
     }
-    
+
     message += `\n✨ *المميزات:*\n`;
     plan.features.forEach(feature => {
         message += `• ${feature}\n`;
     });
-    
+
     message += `\n📞 أود الاستفسار عن هذه الباقة وإتمام عملية الاشتراك.\n`;
     message += `شكراً لكم 🙏`;
-    
+
     // تشفير الرسالة للـ URL
     const encodedMessage = encodeURIComponent(message);
-    
+
     // إنشاء رابط WhatsApp
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}?text=${encodedMessage}`;
-    
+
     // فتح WhatsApp في نافذة جديدة
     window.open(whatsappUrl, '_blank');
-    
+
     // عرض إشعار للمستخدم
     showNotification(
         'جاري توجيهك إلى WhatsApp',
@@ -88,7 +88,7 @@ function scrollToSection(sectionId) {
     if (element) {
         const headerHeight = header ? header.offsetHeight : 80;
         const elementPosition = element.offsetTop - headerHeight;
-        
+
         // طريقة بديلة للتمرير إذا فشلت الطريقة الأولى
         try {
             window.scrollTo({
@@ -99,12 +99,12 @@ function scrollToSection(sectionId) {
             // إذا فشل smooth scroll، استخدم الطريقة التقليدية
             window.scrollTo(0, elementPosition);
         }
-        
+
         // طريقة إضافية للWebView
         if (element.scrollIntoView) {
             setTimeout(() => {
-                element.scrollIntoView({ 
-                    behavior: 'smooth', 
+                element.scrollIntoView({
+                    behavior: 'smooth',
                     block: 'start',
                     inline: 'nearest'
                 });
@@ -154,7 +154,7 @@ const pricingPlans = {
             'دعم فني',
             'مكتبة الأفلام والمسلسلات'
         ]
-    },    annual: {
+    }, annual: {
         name: 'باقة سنة كاملة (الأكثر شعبية)',
         price: 35,
         duration: 12,
@@ -192,7 +192,7 @@ function openOrderModal(planType) {
         selectedPlanInput.value = plan.name;
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        
+
         // Create or update plan details display
         let planDetails = document.querySelector('.plan-details');
         if (!planDetails) {
@@ -200,12 +200,12 @@ function openOrderModal(planType) {
             planDetails.className = 'plan-details';
             selectedPlanInput.parentNode.insertAdjacentElement('afterend', planDetails);
         }
-        
+
         let detailsHTML = `<div style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-top: 1rem;">`;
         detailsHTML += `<h4 style="color: #1a237e; margin: 0 0 0.5rem 0;">تفاصيل الباقة:</h4>`;
         detailsHTML += `<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">`;
         detailsHTML += `<span>السعر:</span>`;
-        
+
         if (plan.originalPrice && plan.savings) {
             detailsHTML += `<div>`;
             detailsHTML += `<span style="text-decoration: line-through; color: #999; margin-left: 10px;">$${plan.originalPrice}</span>`;
@@ -219,14 +219,14 @@ function openOrderModal(planType) {
             detailsHTML += `<span style="font-weight: 700; color: #1a237e; font-size: 1.2rem;">$${plan.price}</span>`;
             detailsHTML += `</div>`;
         }
-        
+
         detailsHTML += `<div style="margin-top: 1rem;">`;
         detailsHTML += `<strong>المدة:</strong> ${getPeriodText(plan.duration)}`;
         detailsHTML += `</div>`;
         detailsHTML += `</div>`;
-        
+
         planDetails.innerHTML = detailsHTML;
-        
+
         // Add animation class
         setTimeout(() => {
             modal.querySelector('.modal-content').style.transform = 'scale(1)';
@@ -236,7 +236,7 @@ function openOrderModal(planType) {
 
 // Helper function to get period text
 function getPeriodText(duration) {
-    switch(duration) {
+    switch (duration) {
         case 1: return 'شهر واحد';
         case 3: return '3 أشهر';
         case 6: return '6 أشهر';
@@ -251,7 +251,7 @@ function closeOrderModal() {
     modal.style.display = 'none';
     document.body.style.overflow = 'auto';
     document.getElementById('orderForm').reset();
-    
+
     // Remove plan details if exists
     const planDetails = document.querySelector('.plan-details');
     if (planDetails) {
@@ -269,9 +269,9 @@ window.addEventListener('click', (e) => {
 // Handle order form submission
 function submitOrder(event) {
     event.preventDefault();
-    
+
     const formData = new FormData(event.target);
-    
+
     // Find the selected plan type
     let selectedPlanType = '';
     const selectedPlanName = selectedPlanInput.value;
@@ -281,9 +281,9 @@ function submitOrder(event) {
             break;
         }
     }
-    
+
     const selectedPlan = pricingPlans[selectedPlanType];
-    
+
     const orderData = {
         planType: selectedPlanType,
         planName: selectedPlan.name,
@@ -296,45 +296,45 @@ function submitOrder(event) {
         notes: formData.get('notes'),
         timestamp: new Date().toISOString()
     };
-    
+
     // Show loading state
     const submitBtn = event.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري المعالجة...';
     submitBtn.disabled = true;
-    
+
     // Simulate order processing
     setTimeout(() => {
         // Reset button
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
-        
+
         // Show success message
         let successMessage = 'تم إرسال طلبك بنجاح!';
         let details = `باقة: ${selectedPlan.name} - السعر: $${selectedPlan.price}`;
         if (selectedPlan.savings) {
             details += ` (وفرت $${selectedPlan.savings})`;
         }
-        
+
         showNotification(
             successMessage,
             `${details}\nسيتم التواصل معك قريباً لإتمام عملية الدفع.`,
             'success'
         );
-        
+
         // Close modal and reset form
         closeOrderModal();
-        
+
         // In a real application, you would send this data to your server
         console.log('Order submitted:', orderData);
-        
+
     }, 2000);
 }
 
 // Handle contact form submission
 function submitContactForm(event) {
     event.preventDefault();
-    
+
     const formData = new FormData(event.target);
     const contactData = {
         name: formData.get('name'),
@@ -343,32 +343,32 @@ function submitContactForm(event) {
         message: formData.get('message'),
         timestamp: new Date().toISOString()
     };
-    
+
     // Show loading state
     const submitBtn = event.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
     submitBtn.disabled = true;
-    
+
     // Simulate form processing
     setTimeout(() => {
         // Reset button
         submitBtn.innerHTML = originalText;
         submitBtn.disabled = false;
-        
+
         // Show success message
         showNotification(
             'تم إرسال رسالتك بنجاح!',
             'سنرد عليك في أقرب وقت ممكن.',
             'success'
         );
-        
+
         // Reset form
         event.target.reset();
-        
+
         // In a real application, you would send this data to your server
         console.log('Contact form submitted:', contactData);
-        
+
     }, 1500);
 }
 
@@ -391,7 +391,7 @@ function showNotification(title, message, type = 'info') {
             </button>
         </div>
     `;
-    
+
     // Add styles if not already added
     if (!document.querySelector('#notification-styles')) {
         const styles = document.createElement('style');
@@ -459,15 +459,15 @@ function showNotification(title, message, type = 'info') {
         `;
         document.head.appendChild(styles);
     }
-    
+
     // Add to DOM
     document.body.appendChild(notification);
-    
+
     // Animate in
     setTimeout(() => {
         notification.style.transform = 'translateX(0)';
     }, 10);
-    
+
     // Auto remove after 5 seconds
     setTimeout(() => {
         closeNotification(notification.querySelector('.notification-close'));
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
         el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
         observer.observe(el);
     });
-    
+
     // Add loading animation to hero elements
     setTimeout(() => {
         document.querySelector('.hero-content').style.opacity = '1';
@@ -538,7 +538,7 @@ function validatePhone(phone) {
 // Add real-time validation to forms
 document.addEventListener('input', (e) => {
     const input = e.target;
-    
+
     if (input.type === 'email') {
         if (input.value && !validateEmail(input.value)) {
             input.style.borderColor = '#dc3545';
@@ -546,7 +546,7 @@ document.addEventListener('input', (e) => {
             input.style.borderColor = '#28a745';
         }
     }
-    
+
     if (input.type === 'tel') {
         if (input.value && !validatePhone(input.value)) {
             input.style.borderColor = '#dc3545';
@@ -558,11 +558,11 @@ document.addEventListener('input', (e) => {
 
 // Add smooth animations to buttons
 document.querySelectorAll('.btn-primary, .btn-secondary, .btn-outline').forEach(btn => {
-    btn.addEventListener('mouseenter', function() {
+    btn.addEventListener('mouseenter', function () {
         this.style.transform = 'translateY(-2px) scale(1.02)';
     });
-    
-    btn.addEventListener('mouseleave', function() {
+
+    btn.addEventListener('mouseleave', function () {
         this.style.transform = 'translateY(0) scale(1)';
     });
 });
@@ -571,7 +571,7 @@ document.querySelectorAll('.btn-primary, .btn-secondary, .btn-outline').forEach(
 window.addEventListener('scroll', () => {
     const scrolled = window.pageYOffset;
     const heroImage = document.querySelector('.hero-image');
-    
+
     if (heroImage && scrolled < window.innerHeight) {
         heroImage.style.transform = `translateY(${scrolled * 0.5}px)`;
     }
@@ -579,13 +579,13 @@ window.addEventListener('scroll', () => {
 
 // دالة للتواصل العام عبر WhatsApp
 function contactViaWhatsApp() {
-    const message = `مرحباً 👋\n\nأود الاستفسار عن خدمات الجوكر سبورت IPTV.\n\nيرجى تزويدي بالمزيد من المعلومات.\n\nشكراً لكم 🙏`;
-    
+    const message = `مرحباً 👋\n\nأود الاستفسار عن خدمات يلا كورة IPTV.\n\nيرجى تزويدي بالمزيد من المعلومات.\n\nشكراً لكم 🙏`;
+
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^\d]/g, '')}?text=${encodedMessage}`;
-    
+
     window.open(whatsappUrl, '_blank');
-      showNotification(
+    showNotification(
         'جاري توجيهك إلى WhatsApp',
         'سيتم فتح تطبيق WhatsApp للتواصل معنا',
         'success'
@@ -596,7 +596,7 @@ function contactViaWhatsApp() {
 const backToTopBtn = document.getElementById('backToTopBtn');
 
 // Show/hide button based on scroll position
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     if (window.pageYOffset > 300) {
         backToTopBtn.classList.add('show');
     } else {
@@ -610,7 +610,7 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
-    
+
     showNotification(
         'العودة إلى الأعلى',
         'تم الانتقال إلى أعلى الصفحة',
@@ -618,4 +618,4 @@ function scrollToTop() {
     );
 }
 
-console.log('الجوكر سبورت IPTV website loaded successfully! 🚀');
+console.log('يلا كورة IPTV website loaded successfully! 🚀');
