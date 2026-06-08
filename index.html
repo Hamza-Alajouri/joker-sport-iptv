@@ -56,13 +56,15 @@
             <h2 class="section-title">شاهد عرض توضيحي للخدمة</h2>
             <p class="section-subtitle">تعرف على جودة البث وتنوع القنوات والأفلام والمسلسلات المتاحة</p>
             <div class="video-container">
-                <iframe 
-                    src="https://todmatch.com/video.mp4" 
+                <video 
                     class="demo-video" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    allowfullscreen>
-                </iframe>
+                    controls 
+                    playsinline
+                    preload="metadata"
+                    style="width: 100%; max-width: 100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <source src="https://todmatch.com/video.mp4" type="video/mp4">
+                    متصفحك لا يدعم تشغيل الفيديو.
+                </video>
             </div>
         </div>
     </section>
